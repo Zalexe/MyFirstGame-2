@@ -74,8 +74,9 @@ class EasyScene: SKScene {
             addChild(Logic.textures[i])
             Logic.textures[i].onTap = {
                 [weak self] in
+                if(self!.Logic.canTap){
                 self!.tapOnCard(identifier: i)
-                
+                }
                 
                 if(self!.Logic.Win()){
                     let victory = SKSpriteNode.init(texture: SKTexture(imageNamed: "victory"),size: CGSize(width: 350, height: 300))
@@ -157,6 +158,7 @@ class EasyScene: SKScene {
             //si esta tapada
             if(Logic.cards[identifier].estado == Card.state.tapado){
                 Logic.secondCard = false
+                Logic.canTap = false
                 Logic.cards[identifier].estado = Card.state.destapado
                 
                 
@@ -209,6 +211,7 @@ class EasyScene: SKScene {
                         self.Logic.textures[self.Logic.tempIdent].run(sequence)
                         
                     }
+                    self.Logic.canTap = true
                 }
                 let actionScale = SKAction.scale(to: CGSize(width:self.Logic.sizeCard.width,height:self.Logic.sizeCard.height), duration: 0.0)
                 sequence = SKAction.sequence([action,action1, action2,action33, action3,actionScale, action4])

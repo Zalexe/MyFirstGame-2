@@ -31,6 +31,7 @@ class GameLogic{
     var secondCard:Bool = false
     var tempIdent:Int = 0
     var sizeCard:CGSize
+    var canTap = true
     
     var textures:[CardSprite]
     
