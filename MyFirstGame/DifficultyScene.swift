@@ -52,7 +52,7 @@ class DifficultyScene: SKScene, ButtonDelegate {
         
         EasyButton.fillColor = .white
         EasyButton.isUserInteractionEnabled = true
-        EasyButton.position = CGPoint(x: view.frame.width / 3, y: view.frame.height * 0.70)
+        EasyButton.position = CGPoint(x: view.frame.width / 2 - 50.0, y: view.frame.height * 0.70)
         //playButton.fillColor = SKColor(named: "Color")!
         EasyButton.strokeColor = .darkGray
         EasyButton.setText(text: "Easy")
@@ -68,7 +68,7 @@ class DifficultyScene: SKScene, ButtonDelegate {
         
         NormalButton.fillColor = .white
         NormalButton.isUserInteractionEnabled = true
-        NormalButton.position = CGPoint(x: view.frame.width / 3, y: view.frame.height * 0.55)
+        NormalButton.position = CGPoint(x: view.frame.width / 2 - 50.0, y: view.frame.height * 0.55)
         //playButton.fillColor = SKColor(named: "Color")!
         NormalButton.strokeColor = .darkGray
         NormalButton.setText(text: "Normal")
@@ -83,7 +83,7 @@ class DifficultyScene: SKScene, ButtonDelegate {
         
         HardButton.fillColor = .white
         HardButton.isUserInteractionEnabled = true
-        HardButton.position = CGPoint(x: view.frame.width / 3, y: view.frame.height * 0.40)
+        HardButton.position = CGPoint(x: view.frame.width / 2 - 50.0, y: view.frame.height * 0.40)
         //playButton.fillColor = SKColor(named: "Color")!
         HardButton.strokeColor = .darkGray
         HardButton.setText(text: "Hard")
