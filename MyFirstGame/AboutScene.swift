@@ -7,13 +7,14 @@
 //
 import UIKit
 import SpriteKit
+import AVFoundation
 
 protocol AboutSceneDelegate: class {
     func back(sender: AboutScene)
 }
 
 //opciones
-class AboutScene: SKScene, ButtonDelegate {
+class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     static let buttonWidth: CGFloat = 200.0
     static let buttonHeight: CGFloat = 50.0
@@ -30,7 +31,7 @@ class AboutScene: SKScene, ButtonDelegate {
     //botones cambiar imagen carta
     private var nextCard = ClousureButton(rect: CGRect(x: 0, y: 0, width: 50, height: 50),cornerRadius: 10)
     private var backCard = ClousureButton(rect: CGRect(x: 0, y: 0, width: 50, height: 50),cornerRadius: 10)
-    private var selectImage = ClousureButton(rect: CGRect(x: 0, y: 0, width: 180, height: 50),cornerRadius: 40)
+    private var selectImage = Button(rect: CGRect(x: 0, y: 0, width: 180, height: 50),cornerRadius: 40)
     
     
     
@@ -41,9 +42,14 @@ class AboutScene: SKScene, ButtonDelegate {
     
     //para escribir texto
    // var text:UITextField
+    let picNode = SKSpriteNode(color: .lightGray, size: CGSize(width: 300, height: 300))
+    let picker = UIImagePickerController()
     
+    weak var viewController: UIViewController?
     
-    
+    /*func displayImage(image: UIImage) {
+        self.picNode.texture = SKTexture(image: image.fixedOrientation())
+    }*/
     override func didMove(to view: SKView) {
         
         backButton.setText(text: "BACK")
@@ -70,12 +76,11 @@ class AboutScene: SKScene, ButtonDelegate {
         carta.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.66)
         
         //swipe hacia la derecha, falta muchas cosas
-        
-        
-        if view == nil{
+
+      /*  if view == nil{
             
             swipeRightGesture.view?.removeGestureRecognizer(swipeRightGesture)
-        }
+        }*/
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(sender:)))
         swipeRight.direction = .right
         view.addGestureRecognizer(swipeRight)
@@ -93,9 +98,16 @@ class AboutScene: SKScene, ButtonDelegate {
         selectImage.position = CGPoint(x: view.frame.width / 2 - 160, y: view.frame.height * 0.33)
         //playButton.fillColor = SKColor(named: "Color")!
         selectImage.strokeColor = .cyan
+        selectImage.delegate = self
         selectImage.setText(text: "Selec.Image")
         addChild(selectImage)
         
+        
+        picNode.position = CGPoint(x: view.center.x, y: view.center.y + 100)
+        addChild(picNode)
+        
+        picker.delegate = self
+        loadImage()
         //para escribir
         /*var textField = UITextField(frame: CGRect(x: 0,  y:-200, width: 10, height: 10))
         textField.delegate = self
@@ -113,6 +125,9 @@ class AboutScene: SKScene, ButtonDelegate {
     func onTap(sender: Button) {
         if sender == backButton {
             aboutDelegate?.back(sender: self)
+        } else if sender == selectImage {
+            openGallery()
+            
         }
     }
     
@@ -137,5 +152,146 @@ class AboutScene: SKScene, ButtonDelegate {
         textField.resignFirstResponder()
         return true
     }*/
+    func openCamera() {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            picker.sourceType = .camera
+            picker.cameraDevice = .front
+            viewController?.present(picker, animated: true, completion: nil)
+        } else {
+            openGallery()
+        }
+    }
     
+    func openGallery() {
+        picker.sourceType = .photoLibrary
+        viewController?.present(picker, animated: true, completion: nil)
+    }
+    
+    func displayImage(image: UIImage) {
+        self.picNode.texture = SKTexture(image: image.fixedOrientation())
+    }
+    
+    func loadImage()  {
+        let documentsDirectoryURL = FileManager.default.urls(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).first
+        if let documentsDirectoryURL = documentsDirectoryURL {
+            do {
+                let data = try Data(contentsOf: documentsDirectoryURL.appendingPathComponent("image.jpg"))
+                if let image = UIImage(data: data) {
+                    displayImage(image: image)
+                }
+            } catch {
+                print(error)
+            }
+            
+        }
+        
+        
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true) {
+            if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                self.displayImage(image: image)
+                
+                // guardar foto
+                let documentsDirectoryURL = FileManager.default.urls(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).first
+                if let data = image.jpegData(compressionQuality: 0.8),
+                    let documentsDirectoryURL = documentsDirectoryURL {
+                    
+                    do {
+                        try data.write(to: documentsDirectoryURL.appendingPathComponent("image.jpg"))
+                    } catch {
+                        print(error)
+                    }
+                    
+                }
+                
+                
+                
+            }
+        }
+    }
+}
+
+extension UIImage {
+    func fixedOrientation() -> UIImage
+    {
+        if imageOrientation == .up {
+            return self
+        }
+        
+        var transform: CGAffineTransform = CGAffineTransform.identity
+        
+        switch imageOrientation {
+        case .down, .downMirrored:
+            transform = transform.translatedBy(x: size.width, y: size.height)
+            transform = transform.rotated(by: CGFloat.pi)
+            break
+        case .left, .leftMirrored:
+            transform = transform.translatedBy(x: size.width, y: 0)
+            transform = transform.rotated(by: CGFloat.pi / 2.0)
+            break
+        case .right, .rightMirrored:
+            transform = transform.translatedBy(x: 0, y: size.height)
+            transform = transform.rotated(by: CGFloat.pi / -2.0)
+            break
+        case .up, .upMirrored:
+            break
+        }
+        switch imageOrientation {
+        case .upMirrored, .downMirrored:
+            transform.translatedBy(x: size.width, y: 0)
+            transform.scaledBy(x: -1, y: 1)
+            break
+        case .leftMirrored, .rightMirrored:
+            transform.translatedBy(x: size.height, y: 0)
+            transform.scaledBy(x: -1, y: 1)
+        case .up, .down, .left, .right:
+            break
+        }
+        
+        let ctx: CGContext = CGContext(data: nil, width: Int(size.width), height: Int(size.height), bitsPerComponent: self.cgImage!.bitsPerComponent, bytesPerRow: 0, space: self.cgImage!.colorSpace!, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+        
+        ctx.concatenate(transform)
+        
+        switch imageOrientation {
+        case .left, .leftMirrored, .right, .rightMirrored:
+            ctx.draw(self.cgImage!, in: CGRect(x: 0, y: 0, width: size.height, height: size.width))
+        default:
+            ctx.draw(self.cgImage!, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+            break
+        }
+        
+        return UIImage(cgImage: ctx.makeImage()!)
+    }
+    
+    /// Aspect fit an image from a size. (center)
+    ///
+    /// The input size is the minimum size of the output image. The size of `self` is the
+    /// maximum size of the output image. Aspect ratio is maintained. Transparency is added to the
+    /// sides of the output image to keep the image centered.
+    ///
+    /// - parameter in: The `CGSize` in which to scale and center `self`.
+    func scaleAndFit(in inputSize: CGSize) -> UIImage {
+        // Scale rect to fit image, if image is larger.
+        // E.g. image 6000x4000, rect 200x400, results in 6000 x 12000
+        let scaledSize: CGSize = {
+            let ratio = (size.height > size.width) ?
+                max(size.height / inputSize.height, 1.0):
+                max(size.width / inputSize.width, 1.0)
+            return CGSize(width: inputSize.width*ratio, height: inputSize.height*ratio)
+        }()
+        
+        // Fit image inside scaled rect
+        // E.g. image 6000x4000, scaled rect 6000x12000, results in (0, 4000, 6000, 4000)
+        let scaledAspectFitRect = AVMakeRect(aspectRatio: size, insideRect: CGRect(origin: .zero, size: scaledSize))
+        
+        // Create the image
+        UIGraphicsBeginImageContextWithOptions(scaledSize, false, 0.0)
+        draw(in: scaledAspectFitRect)
+        let image = UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
+        UIGraphicsEndImageContext()
+        
+        return image
+    }
 }
