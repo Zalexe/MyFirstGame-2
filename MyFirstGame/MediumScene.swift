@@ -47,19 +47,19 @@ class MediumScene: SKScene {
             
             let offsety = CGFloat(i)
             if(i < 5){
-                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 - (120.0)) , y: (view.frame.height - 90.0 - ((view.frame.height / 5) * offsety )))
+                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 - (view.frame.width/3)) , y: (view.frame.height - view.frame.height / 8 - ((view.frame.height / 5) * offsety )))
             }
             else if(i < 10){
-                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 - (40.0) ) , y: (view.frame.height - 90.0 - ((view.frame.height / 5) * (offsety - 5))))
+                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 - (view.frame.width/8) ) , y: (view.frame.height - view.frame.height / 8 - ((view.frame.height / 5) * (offsety - 5))))
             }
             else if( i < 15){
-                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 + (40.0)) , y: (view.frame.height - 90.0 - ((view.frame.height / 5) * (offsety - 10))))
+                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 + (view.frame.width/8)) , y: (view.frame.height - view.frame.height / 8 - ((view.frame.height / 5) * (offsety - 10))))
             }
             else if( i < 20){
-                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 + (110.0)) , y: (view.frame.height - 90.0 - ((view.frame.height / 5) * (offsety - 15))))
+                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 + (view.frame.width/3)) , y: (view.frame.height - view.frame.height / 8 - ((view.frame.height / 5) * (offsety - 15))))
             }
-            Logic.textures[i].scale(to: CGSize(width: (view.frame.width / 20.0) + 60, height: (view.frame.width / 20.0) + 90))
-            Logic.sizeCard = CGSize(width: (view.frame.width / 20.0) + 60, height: (view.frame.width / 20.0) + 90)
+            Logic.textures[i].scale(to: CGSize(width: (view.frame.width / 20.0) + view.frame.width / 10, height: (view.frame.height / 20.0) + view.frame.height / 10))
+            Logic.sizeCard = CGSize(width: (view.frame.width / 20.0) + view.frame.width / 10, height: (view.frame.height / 20.0) + view.frame.height / 10)
             Logic.textures[i].isUserInteractionEnabled = true
             
             addChild(Logic.textures[i])

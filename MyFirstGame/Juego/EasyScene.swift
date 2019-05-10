@@ -58,16 +58,16 @@ class EasyScene: SKScene {
             
             let offsety = CGFloat(i)
             if(i < 4){
-                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 - (100.0)) , y: (view.frame.height - 100.0 - ((view.frame.height / 4) * offsety )))
+                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 - (view.frame.width/3)) , y: (view.frame.height - view.frame.height/8 - ((view.frame.height / 4) * offsety )))
             }
             else if(i < 8){
-                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 ) , y: (view.frame.height - 100.0 - ((view.frame.height / 4) * (offsety - 4))))
+                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 ) , y: (view.frame.height - view.frame.height/8 - ((view.frame.height / 4) * (offsety - 4))))
             }
             else if( i < 13){
-                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 + (100.0)) , y: (view.frame.height - 100.0 - ((view.frame.height / 4) * (offsety - 8))))
+                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 + (view.frame.width/3)) , y: (view.frame.height - view.frame.height/8 - ((view.frame.height / 4) * (offsety - 8))))
             }
-            Logic.textures[i].scale(to: CGSize(width: (view.frame.width / 20.0) + 70, height: (view.frame.width / 20.0) + 100))
-            Logic.sizeCard = CGSize(width: (view.frame.width / 20.0) + 70, height: (view.frame.width / 20.0) + 100)
+            Logic.textures[i].scale(to: CGSize(width: (view.frame.width / 20.0) + view.frame.width / 6.0, height: (view.frame.height / 20.0) + view.frame.height / 8.0))
+            Logic.sizeCard = CGSize(width: (view.frame.width / 20.0) + view.frame.width / 6.0, height: (view.frame.height / 20.0) + view.frame.height / 8.0)
             Logic.textures[i].isUserInteractionEnabled = true
             
             
