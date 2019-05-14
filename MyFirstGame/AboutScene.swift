@@ -25,8 +25,8 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
     
     private var label : SKLabelNode?
     
-    var cartas: [String] = ["CardFront","obelisk","sliffer","Chimeratech","fusion","mirror","stardust","firewall","dhampir","chaosmax","pendulum","supreme"]
-    
+    var cartas: [SKTexture] = [SKTexture(imageNamed: "CardFront"),SKTexture(imageNamed:"obelisk"),SKTexture(imageNamed:"sliffer"),SKTexture(imageNamed:"Chimeratech"),SKTexture(imageNamed:"fusion"),SKTexture(imageNamed:"mirror"),SKTexture(imageNamed:"stardust"),SKTexture(imageNamed:"firewall"),SKTexture(imageNamed:"dhampir"),SKTexture(imageNamed:"chaosmax"),SKTexture(imageNamed:"pendulum"),SKTexture(imageNamed:"supreme")]
+    var WhichCard: Int = 0
     
     //botones cambiar imagen carta
     private var nextCard = ClousureButton(rect: CGRect(x: 0, y: 0, width: 50, height: 50),cornerRadius: 10)
@@ -42,7 +42,7 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
     
     //para escribir texto
    // var text:UITextField
-    let picNode = SKSpriteNode(color: .lightGray, size: CGSize(width: 300, height: 300))
+    let picNode = SKSpriteNode(color: .lightGray, size: CGSize(width: cardWidth, height: cardHeight))
     let picker = UIImagePickerController()
     
     weak var viewController: UIViewController?
@@ -51,6 +51,14 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
         self.picNode.texture = SKTexture(image: image.fixedOrientation())
     }*/
     override func didMove(to view: SKView) {
+        
+        
+        // let nombreArchivoCarta = "4corazones"
+        let carta = SKSpriteNode(texture: cartas[WhichCard])
+        addChild(carta)
+        
+        carta.scale(to: CGSize(width: AboutScene.cardWidth,height: AboutScene.cardHeight))
+        carta.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.66)
         
         backButton.setText(text: "BACK")
         backButton.fillColor = .red
@@ -66,14 +74,18 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
         //playButton.fillColor = SKColor(named: "Color")!
         nextCard.strokeColor = .darkGray
         nextCard.setText(text: ">")
+        nextCard.onTap = {
+            self.WhichCard = self.WhichCard - 1
+            if(self.WhichCard < 0){
+                self.WhichCard = 11
+            }
+            var action = SKAction.setTexture(self.cartas[self.WhichCard], resize: false)
+            carta.run(action)
+        }
+
         addChild(nextCard)
         
-        let nombreArchivoCarta = "4corazones"
-        let carta = SKSpriteNode(imageNamed: nombreArchivoCarta)
-        addChild(carta)
-        
-        carta.scale(to: CGSize(width: AboutScene.cardWidth,height: AboutScene.cardHeight))
-        carta.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.66)
+
         
         //swipe hacia la derecha, falta muchas cosas
 
@@ -91,6 +103,15 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
         //playButton.fillColor = SKColor(named: "Color")!
         backCard.strokeColor = .darkGray
         backCard.setText(text: "<")
+        backCard.onTap = {
+            self.WhichCard = self.WhichCard + 1
+            if(self.WhichCard > 11){
+                self.WhichCard = 0
+            }
+            
+            var action = SKAction.setTexture(self.cartas[self.WhichCard], resize: false)
+            carta.run(action)
+        }
         addChild(backCard)
         
         selectImage.fillColor = .green
@@ -103,8 +124,8 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
         addChild(selectImage)
         
         
-        picNode.position = CGPoint(x: view.center.x, y: view.center.y + 100)
-        addChild(picNode)
+        picNode.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.66)
+       // addChild(picNode)
         
         picker.delegate = self
         loadImage()
@@ -115,6 +136,8 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
         
         scene?.backgroundColor = SKColor(named: "Color")!
         
+        
+
     }
 
     override func willMove(from view: SKView){
@@ -129,6 +152,7 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
             openGallery()
             
         }
+
     }
     
     @objc func swipeRight(sender: UISwipeGestureRecognizer){
