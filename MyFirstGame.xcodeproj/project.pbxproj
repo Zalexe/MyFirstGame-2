@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6B490D0E228460DF00A7F4C1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B490D10228460DF00A7F4C1 /* InfoPlist.strings */; };
+		6BC2874A228D96CE00AD39DC /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6BC28749228D96CE00AD39DC /* Settings.bundle */; };
 		A30AA601223A861300F44940 /* DifficultyScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AA600223A861300F44940 /* DifficultyScene.swift */; };
 		A30D68082237E918009FC165 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30D68072237E918009FC165 /* MenuScene.swift */; };
 		A30D680A2237E955009FC165 /* AboutScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30D68092237E955009FC165 /* AboutScene.swift */; };
@@ -38,6 +39,7 @@
 		6B490D0D228460BE00A7F4C1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		6B490D0F228460DF00A7F4C1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6B490D11228460E200A7F4C1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6BC28749228D96CE00AD39DC /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		A30AA600223A861300F44940 /* DifficultyScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyScene.swift; sourceTree = "<group>"; };
 		A30D68072237E918009FC165 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		A30D68092237E955009FC165 /* AboutScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutScene.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				A313786022315D9D006C8105 /* ClousureButton.swift */,
 				A3B2D278223BD9B700F2BFB5 /* SpriteButton.swift */,
 				6B490D10228460DF00A7F4C1 /* InfoPlist.strings */,
+				6BC28749228D96CE00AD39DC /* Settings.bundle */,
 			);
 			path = MyFirstGame;
 			sourceTree = "<group>";
@@ -191,6 +194,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BC2874A228D96CE00AD39DC /* Settings.bundle in Resources */,
 				A3FF39392216ECDE00BE3829 /* Main.storyboard in Resources */,
 				6B490D0E228460DF00A7F4C1 /* InfoPlist.strings in Resources */,
 				A3FF39302216ECDE00BE3829 /* GameScene.sks in Resources */,

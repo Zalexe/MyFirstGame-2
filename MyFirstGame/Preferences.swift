@@ -11,7 +11,7 @@ import Foundation
 class Preferences {
     
     let k_SOUND_ON = "SOUND_ON"
-    
+    let K_DECK = "K_DECK"
     func isSoundOn() -> Bool{
         
         if let _ = UserDefaults.standard.object(forKey: k_SOUND_ON){
@@ -28,4 +28,14 @@ class Preferences {
         UserDefaults.standard.set(!soundOn, forKey: k_SOUND_ON)
         
     }
+    
+    func saveCards(){
+        
+       // UserDefaults.standard.set(cartas, forKey: K_DECK)
+    }
+    func getCards(){
+        //cartas = UserDefaults.standard.object(forKey: K_DECK)
+    }
+    
+    
 }

@@ -35,6 +35,15 @@ class CardSprite: SKSpriteNode {
         super.init(texture: TextureBack, color: .black, size: texture.size())
         
     }
+    init(_ texturasB: SKTexture){
+        imageName = ""
+        TextureFront = texturasB
+        
+        
+        let texture = texturasB
+        super.init(texture: TextureBack, color: .black, size: texture.size())
+        
+    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

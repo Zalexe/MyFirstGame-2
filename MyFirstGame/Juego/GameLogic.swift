@@ -41,9 +41,9 @@ class GameLogic{
             difficulty = .easy
             sizeCard = CGSize(width: 70 , height: 100)
 
-            textures = [CardSprite("CardFront"),CardSprite("obelisk"),CardSprite("sliffer"),CardSprite("Chimeratech")
-                ,CardSprite("fusion"),CardSprite("mirror")     ,    CardSprite("sliffer"),CardSprite("mirror")
-                ,CardSprite("Chimeratech"),CardSprite("fusion"),CardSprite("obelisk"),CardSprite("CardFront")]
+            textures = [CardSprite(cartas[0]),CardSprite(cartas[1]),CardSprite(cartas[2])
+                ,CardSprite(cartas[3]),CardSprite(cartas[4]), CardSprite(cartas[5])    ,    CardSprite(cartas[0]),CardSprite(cartas[1]),CardSprite(cartas[2])
+                ,CardSprite(cartas[3]),CardSprite(cartas[4]),CardSprite(cartas[5])]
             textures.shuffle()
             
             for _ in 0..<(difficulty.rawValue ){

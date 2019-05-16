@@ -12,7 +12,11 @@ import AVFoundation
 protocol AboutSceneDelegate: class {
     func back(sender: AboutScene)
 }
-
+struct defaultsKeys {
+    static let keyOne = "firstStringKey"
+    static let keyTwo = "secondStringKey"
+}
+var cartas: [SKTexture] = [SKTexture(imageNamed: "CardFront"),SKTexture(imageNamed:"obelisk"),SKTexture(imageNamed:"sliffer"),SKTexture(imageNamed:"Chimeratech"),SKTexture(imageNamed:"fusion"),SKTexture(imageNamed:"mirror"),SKTexture(imageNamed:"stardust"),SKTexture(imageNamed:"firewall"),SKTexture(imageNamed:"dhampir"),SKTexture(imageNamed:"chaosmax"),SKTexture(imageNamed:"pendulum"),SKTexture(imageNamed:"supreme")]
 //opciones
 class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -25,7 +29,7 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
     
     private var label : SKLabelNode?
     
-    var cartas: [SKTexture] = [SKTexture(imageNamed: "CardFront"),SKTexture(imageNamed:"obelisk"),SKTexture(imageNamed:"sliffer"),SKTexture(imageNamed:"Chimeratech"),SKTexture(imageNamed:"fusion"),SKTexture(imageNamed:"mirror"),SKTexture(imageNamed:"stardust"),SKTexture(imageNamed:"firewall"),SKTexture(imageNamed:"dhampir"),SKTexture(imageNamed:"chaosmax"),SKTexture(imageNamed:"pendulum"),SKTexture(imageNamed:"supreme")]
+    
     var WhichCard: Int = 0
     
     //botones cambiar imagen carta
@@ -79,13 +83,12 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
             if(self.WhichCard < 0){
                 self.WhichCard = 11
             }
-            var action = SKAction.setTexture(self.cartas[self.WhichCard], resize: false)
+            let action = SKAction.setTexture(cartas[self.WhichCard], resize: true)
             carta.run(action)
         }
 
         addChild(nextCard)
         
-
         
         //swipe hacia la derecha, falta muchas cosas
 
@@ -109,7 +112,7 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
                 self.WhichCard = 0
             }
             
-            var action = SKAction.setTexture(self.cartas[self.WhichCard], resize: false)
+            let action = SKAction.setTexture(cartas[self.WhichCard], resize: true)
             carta.run(action)
         }
         addChild(backCard)
@@ -148,9 +151,10 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
     func onTap(sender: Button) {
         if sender == backButton {
             aboutDelegate?.back(sender: self)
+
         } else if sender == selectImage {
             openGallery()
-            
+
         }
 
     }
@@ -193,6 +197,8 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
     
     func displayImage(image: UIImage) {
         self.picNode.texture = SKTexture(image: image.fixedOrientation())
+        cartas[self.WhichCard] = SKTexture(image: image.fixedOrientation())
+
     }
     
     func loadImage()  {
