@@ -16,7 +16,7 @@ struct defaultsKeys {
     static let keyOne = "firstStringKey"
     static let keyTwo = "secondStringKey"
 }
-var cartas: [SKTexture] = [SKTexture(imageNamed: "CardFront"),SKTexture(imageNamed:"obelisk"),SKTexture(imageNamed:"sliffer"),SKTexture(imageNamed:"Chimeratech"),SKTexture(imageNamed:"fusion"),SKTexture(imageNamed:"mirror"),SKTexture(imageNamed:"stardust"),SKTexture(imageNamed:"firewall"),SKTexture(imageNamed:"dhampir"),SKTexture(imageNamed:"chaosmax"),SKTexture(imageNamed:"pendulum"),SKTexture(imageNamed:"supreme")]
+var cartas: [String] = [ "CardFront","obelisk","sliffer","Chimeratech","fusion","mirror","stardust","firewall","dhampir","chaosmax","pendulum","supreme"]
 //opciones
 class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -36,7 +36,8 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
     private var nextCard = ClousureButton(rect: CGRect(x: 0, y: 0, width: 50, height: 50),cornerRadius: 10)
     private var backCard = ClousureButton(rect: CGRect(x: 0, y: 0, width: 50, height: 50),cornerRadius: 10)
     private var selectImage = Button(rect: CGRect(x: 0, y: 0, width: 180, height: 50),cornerRadius: 40)
-    
+   // private var MuteButton = ClousureButton(rect: CGRect(x: 0, y: 0, width: 180, height: 50),cornerRadius: 40)
+    private var MuteButton = SKSpriteNode(texture: SKTexture(imageNamed: "mute"))
     
     
     private var backButton = Button(rect: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight), cornerRadius: 10)
@@ -58,17 +59,23 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
         
         
         // let nombreArchivoCarta = "4corazones"
-        let carta = SKSpriteNode(texture: cartas[WhichCard])
+        let carta = SKSpriteNode(texture: SKTexture(imageNamed: cartas[WhichCard]))
         addChild(carta)
         
         carta.scale(to: CGSize(width: AboutScene.cardWidth,height: AboutScene.cardHeight))
-        carta.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.66)
+        carta.position = CGPoint(x: view.frame.width / 2.0  , y: view.frame.height * 0.66)
         
+        MuteButton.scale(to: CGSize(width: AboutScene.buttonWidth / 2.0, height: AboutScene.buttonHeight + AboutScene.buttonHeight))
+        MuteButton.position = CGPoint(x: view.frame.width / 2 + view.frame.width / 3 , y: view.frame.height * 0.33)
+        MuteButton.isUserInteractionEnabled = true
+
+     //   addChild(MuteButton)
+        //
         backButton.setText(text: "BACK")
         backButton.fillColor = .red
         backButton.isUserInteractionEnabled = true
         backButton.delegate = self
-        backButton.position = CGPoint(x: (view.frame.width / 2.0) - (AboutScene.buttonWidth / 2 ), y: 100)
+        backButton.position = CGPoint(x: (view.frame.width / 2.0) - (AboutScene.buttonWidth / 2 ), y: (view.frame.height / 8.0) - (AboutScene.buttonHeight / 2 ))
         addChild(backButton)
         
         //botones cambiar imagen carta
@@ -83,7 +90,11 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
             if(self.WhichCard < 0){
                 self.WhichCard = 11
             }
-            let action = SKAction.setTexture(cartas[self.WhichCard], resize: true)
+            var action = SKAction.setTexture(SKTexture(imageNamed: cartas[self.WhichCard]), resize: false)
+            carta.run(action)
+            action = SKAction.run{
+                carta.scale(to: CGSize(width: AboutScene.cardWidth,height: AboutScene.cardHeight))
+                carta.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.66)}
             carta.run(action)
         }
 
@@ -112,10 +123,19 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
                 self.WhichCard = 0
             }
             
-            let action = SKAction.setTexture(cartas[self.WhichCard], resize: true)
+            var action = SKAction.setTexture(SKTexture(imageNamed: cartas[self.WhichCard]), resize: false)
+
+            carta.run(action)
+            action = SKAction.run{
+                carta.scale(to: CGSize(width: AboutScene.cardWidth,height: AboutScene.cardHeight))
+                carta.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.66)}
             carta.run(action)
         }
         addChild(backCard)
+        
+
+        
+        
         
         selectImage.fillColor = .green
         selectImage.isUserInteractionEnabled = true
@@ -123,7 +143,7 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
         //playButton.fillColor = SKColor(named: "Color")!
         selectImage.strokeColor = .cyan
         selectImage.delegate = self
-        selectImage.setText(text: "Selec.Image")
+        selectImage.setText(text: "Sel.Image")
         addChild(selectImage)
         
         
@@ -197,7 +217,7 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
     
     func displayImage(image: UIImage) {
         self.picNode.texture = SKTexture(image: image.fixedOrientation())
-        cartas[self.WhichCard] = SKTexture(image: image.fixedOrientation())
+        //cartas[self.WhichCard] = SKTexture(image: image.fixedOrientation())
 
     }
     

@@ -31,10 +31,13 @@ class Preferences {
     
     func saveCards(){
         
-       // UserDefaults.standard.set(cartas, forKey: K_DECK)
+       //UserDefaults.standard.set(cartas, forKey: K_DECK)
     }
     func getCards(){
-        //cartas = UserDefaults.standard.object(forKey: K_DECK)
+       /* if let savedCards = UserDefaults.standard.object(forKey: K_DECK) as? [String] {
+            
+            //cartas = savedCards
+        }*/
     }
     
     
