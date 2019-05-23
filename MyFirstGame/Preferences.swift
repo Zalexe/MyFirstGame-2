@@ -10,9 +10,9 @@ import Foundation
 
 class Preferences {
     
-    let k_SOUND_ON = "SOUND_ON"
-    let K_DECK = "K_DECK"
-    func isSoundOn() -> Bool{
+    static let k_SOUND_ON = "SOUND_ON"
+    static let K_DECK = "K_DECK"
+    static func isSoundOn() -> Bool{
         
         if let _ = UserDefaults.standard.object(forKey: k_SOUND_ON){
             let soundOn = UserDefaults.standard.bool(forKey: k_SOUND_ON)
@@ -23,17 +23,17 @@ class Preferences {
     
     
     
-    func toggleSound(){
+   static func toggleSound(){
         let soundOn = isSoundOn()
         UserDefaults.standard.set(!soundOn, forKey: k_SOUND_ON)
         
     }
     
-    func saveCards(){
+    static func saveCards(){
         
        //UserDefaults.standard.set(cartas, forKey: K_DECK)
     }
-    func getCards(){
+    static func getCards(){
        /* if let savedCards = UserDefaults.standard.object(forKey: K_DECK) as? [String] {
             
             //cartas = savedCards

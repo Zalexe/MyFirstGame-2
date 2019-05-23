@@ -47,7 +47,10 @@ class EasyScene: SKScene {
         scene?.backgroundColor = SKColor(named: "Color")!
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self,      selector: #selector(timerRunning), userInfo: nil, repeats: true)
         
-        audio.play()
+        if(Preferences.isSoundOn() == true){
+            audio.play()
+            
+        }
         
         
         

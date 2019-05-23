@@ -37,7 +37,9 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
     private var backCard = ClousureButton(rect: CGRect(x: 0, y: 0, width: 50, height: 50),cornerRadius: 10)
     private var selectImage = Button(rect: CGRect(x: 0, y: 0, width: 180, height: 50),cornerRadius: 40)
    // private var MuteButton = ClousureButton(rect: CGRect(x: 0, y: 0, width: 180, height: 50),cornerRadius: 40)
-    private var MuteButton = SKSpriteNode(texture: SKTexture(imageNamed: "mute"))
+    
+    //comprobar si ya esta muteado o no para poner una textura o otra
+    private var MuteButton = SpriteButton(texture: SKTexture(imageNamed: "mute"))
     
     
     private var backButton = Button(rect: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight), cornerRadius: 10)
@@ -57,7 +59,14 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
     }*/
     override func didMove(to view: SKView) {
         
-        
+        if(Preferences.isSoundOn() == true){
+            let action = SKAction.setTexture(SKTexture(imageNamed: "speaker"), resize: false)
+            self.MuteButton.run(action)
+        }
+        else if(Preferences.isSoundOn() == false){
+            let action = SKAction.setTexture(SKTexture(imageNamed: "mute"), resize: false)
+            self.MuteButton.run(action)
+        }
         // let nombreArchivoCarta = "4corazones"
         let carta = SKSpriteNode(texture: SKTexture(imageNamed: cartas[WhichCard]))
         addChild(carta)
@@ -68,8 +77,22 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
         MuteButton.scale(to: CGSize(width: AboutScene.buttonWidth / 2.0, height: AboutScene.buttonHeight + AboutScene.buttonHeight))
         MuteButton.position = CGPoint(x: view.frame.width / 2 + view.frame.width / 3 , y: view.frame.height * 0.33)
         MuteButton.isUserInteractionEnabled = true
+       // MuteButton.delegate = self
+        MuteButton.onTap = {
+            Preferences.toggleSound()
+            if(Preferences.isSoundOn() == true){
+                let action = SKAction.setTexture(SKTexture(imageNamed: "speaker"), resize: false)
+                self.MuteButton.run(action)
+            }
+            else if(Preferences.isSoundOn() == false){
+                let action = SKAction.setTexture(SKTexture(imageNamed: "mute"), resize: false)
+                self.MuteButton.run(action)
+            }
+            
+            //print("mute")
+        }
 
-     //   addChild(MuteButton)
+        addChild(MuteButton)
         //
         backButton.setText(text: "BACK")
         backButton.fillColor = .red
