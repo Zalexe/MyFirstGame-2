@@ -113,12 +113,17 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
             if(self.WhichCard < 0){
                 self.WhichCard = 11
             }
-            var action = SKAction.setTexture(SKTexture(imageNamed: cartas[self.WhichCard]), resize: false)
-            carta.run(action)
-            action = SKAction.run{
-                carta.scale(to: CGSize(width: AboutScene.cardWidth,height: AboutScene.cardHeight))
-                carta.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.66)}
-            carta.run(action)
+            
+            if(String(cartas[self.WhichCard].index(cartas[self.WhichCard].startIndex, offsetBy: 0)) != "i" && String(cartas[self.WhichCard].index(cartas[self.WhichCard].startIndex, offsetBy: 1)) != "m" && String(cartas[self.WhichCard].index(cartas[self.WhichCard].startIndex, offsetBy: 2)) != "a"){
+                var action = SKAction.setTexture(SKTexture(imageNamed: cartas[self.WhichCard]), resize: false)
+                carta.run(action)
+                action = SKAction.run{
+                    carta.scale(to: CGSize(width: AboutScene.cardWidth,height: AboutScene.cardHeight))
+                    carta.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.66)
+                    
+                }
+                carta.run(action)
+            }
         }
 
         addChild(nextCard)
@@ -240,7 +245,7 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
     
     func displayImage(image: UIImage) {
         self.picNode.texture = SKTexture(image: image.fixedOrientation())
-        //cartas[self.WhichCard] = SKTexture(image: image.fixedOrientation())
+        cartas[self.WhichCard] = "image" + String(WhichCard) + ".jpg"
 
     }
     
@@ -248,7 +253,7 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
         let documentsDirectoryURL = FileManager.default.urls(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).first
         if let documentsDirectoryURL = documentsDirectoryURL {
             do {
-                let data = try Data(contentsOf: documentsDirectoryURL.appendingPathComponent("image.jpg"))
+                let data = try Data(contentsOf: documentsDirectoryURL.appendingPathComponent("image" + String(WhichCard) + ".jpg"))
                 if let image = UIImage(data: data) {
                     displayImage(image: image)
                 }

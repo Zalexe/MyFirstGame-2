@@ -42,6 +42,8 @@ class HardScene: SKScene {
             
         }
         
+        var enseñado = false
+        
         scene?.backgroundColor = SKColor(named: "Color")!
         for i in 0..<(Logic.difficulty.rawValue ){
             
@@ -67,7 +69,7 @@ class HardScene: SKScene {
             addChild(Logic.textures[i])
             Logic.textures[i].onTap = {
                 [weak self] in
-                if(self!.Logic.canTap && self!.Logic.Win() != true && self!.time != 0){
+                if(self!.Logic.canTap && self!.Logic.Win() != true && self!.time != 0 && enseñado){
                     self!.tapOnCard(identifier: i)
                 }
 
@@ -122,8 +124,14 @@ class HardScene: SKScene {
                 let sequence = SKAction.sequence([action,action1, action2,actionScaleY, action3])
                 self.Logic.textures[i].run(sequence)
             }
+            enseñado = true
         }
-        let sequence = SKAction.sequence([actionInicial1, actionInicial2, actionInicial3])
+        let actionInicial4 = SKAction.wait(forDuration: 0.5)
+        let actionInicial5 = SKAction.run{
+            enseñado = true
+        }
+        
+        let sequence = SKAction.sequence([actionInicial1, actionInicial2, actionInicial3, actionInicial4, actionInicial5])
         Logic.textures[1].run(sequence)
         
         
@@ -167,7 +175,7 @@ class HardScene: SKScene {
                     if(self.Logic.textures[identifier].imageName == self.Logic.textures[self.Logic.tempIdent].imageName){
                         self.Logic.cards[identifier].estado = Card.state.emparejado
                         self.Logic.cards[self.Logic.tempIdent].estado = Card.state.emparejado
-                        self.Logic.score += 10
+                        self.Logic.score += self.Logic.points
                         
                         
                         //Comprobar si se ha acabado la partida

@@ -52,6 +52,7 @@ class GameLogic{
                 cards.append(card1)
                 
             }
+            points = 20
         }
         else if(dificulty == 2){
             difficulty = .medium
@@ -65,6 +66,7 @@ class GameLogic{
                 cards.append(card1)
                 
             }
+            points = 40
         }
         else{
             difficulty = .hard
@@ -78,6 +80,8 @@ class GameLogic{
                 cards.append(card1)
                 
             }
+            
+            points = 60
         }
     
         
