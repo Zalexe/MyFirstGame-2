@@ -68,14 +68,10 @@ class MediumScene: SKScene {
             addChild(Logic.textures[i])
             Logic.textures[i].onTap = {
                 [weak self] in
-                if(self!.Logic.canTap){
+                if(self!.Logic.canTap && self!.Logic.Win() != true && self!.time != 0){
                 self!.tapOnCard(identifier: i)
                 }
-                if(self!.Logic.Win()){
-                    let victory = SKSpriteNode.init(texture: SKTexture(imageNamed: "victory"),size: CGSize(width: 350, height: 300))
-                    victory.position = CGPoint(x: (view.frame.width / 2 ) , y: (view.frame.height / 2))
-                    self!.addChild(victory)
-                }
+
             }
             
  
@@ -239,6 +235,14 @@ class MediumScene: SKScene {
     
     @objc func timerRunning() {
         time = time - 1
+        
+        if(Logic.Win()){
+            let victory = SKSpriteNode.init(texture: SKTexture(imageNamed: "victory"),size: CGSize(width: 350, height: 300))
+            victory.position = CGPoint(x: (view!.frame.width / 2 ) , y: (view!.frame.height / 2))
+            addChild(victory)
+            timer?.invalidate()
+        }
+        
         if let label = label {
             label.text = "\(time)"
             
