@@ -68,7 +68,15 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
             self.MuteButton.run(action)
         }
         // let nombreArchivoCarta = "4corazones"
+        Preferences.getCards()
+        
         let carta = SKSpriteNode(texture: SKTexture(imageNamed: cartas[WhichCard]))
+        if let image = self.loadImage(imageName: cartas[self.WhichCard]) {
+            self.setImageOnTexture(carta: carta, image: image)
+        } else {
+            self.setImageOnTexture(carta: carta, image: UIImage(named: cartas[self.WhichCard]) ?? UIImage())
+        }
+        
         addChild(carta)
         
         carta.scale(to: CGSize(width: AboutScene.cardWidth,height: AboutScene.cardHeight))
@@ -113,17 +121,14 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
             if(self.WhichCard < 0){
                 self.WhichCard = 11
             }
-            
-            if(String(cartas[self.WhichCard].index(cartas[self.WhichCard].startIndex, offsetBy: 0)) != "i" && String(cartas[self.WhichCard].index(cartas[self.WhichCard].startIndex, offsetBy: 1)) != "m" && String(cartas[self.WhichCard].index(cartas[self.WhichCard].startIndex, offsetBy: 2)) != "a"){
-                var action = SKAction.setTexture(SKTexture(imageNamed: cartas[self.WhichCard]), resize: false)
-                carta.run(action)
-                action = SKAction.run{
-                    carta.scale(to: CGSize(width: AboutScene.cardWidth,height: AboutScene.cardHeight))
-                    carta.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.66)
-                    
-                }
-                carta.run(action)
+
+            if let image = self.loadImage(imageName: cartas[self.WhichCard]) {
+                self.setImageOnTexture(carta: carta, image: image)
+            } else {
+                self.setImageOnTexture(carta: carta, image: UIImage(named: cartas[self.WhichCard]) ?? UIImage())
             }
+            
+            
         }
 
         addChild(nextCard)
@@ -151,13 +156,12 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
                 self.WhichCard = 0
             }
             
-            var action = SKAction.setTexture(SKTexture(imageNamed: cartas[self.WhichCard]), resize: false)
-
-            carta.run(action)
-            action = SKAction.run{
-                carta.scale(to: CGSize(width: AboutScene.cardWidth,height: AboutScene.cardHeight))
-                carta.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.66)}
-            carta.run(action)
+            if let image = self.loadImage(imageName: cartas[self.WhichCard]) {
+                self.setImageOnTexture(carta: carta, image: image)
+            } else {
+                self.setImageOnTexture(carta: carta, image: UIImage(named: cartas[self.WhichCard]) ?? UIImage())
+            }
+            
         }
         addChild(backCard)
         
@@ -179,7 +183,7 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
        // addChild(picNode)
         
         picker.delegate = self
-        loadImage()
+//        loadImage(imageName: "image" + String(WhichCard) + ".jpg")
         //para escribir
         /*var textField = UITextField(frame: CGRect(x: 0,  y:-200, width: 10, height: 10))
         textField.delegate = self
@@ -189,6 +193,16 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
         
         
 
+    }
+    
+    func setImageOnTexture(carta: SKSpriteNode, image: UIImage) {
+        var action = SKAction.setTexture(SKTexture(image: image), resize: false)
+        
+        carta.run(action)
+        action = SKAction.run{
+            carta.scale(to: CGSize(width: AboutScene.cardWidth,height: AboutScene.cardHeight))
+            carta.position = CGPoint(x: self.view!.frame.width / 2.0, y: self.view!.frame.height * 0.66)}
+        carta.run(action)
     }
 
     override func willMove(from view: SKView){
@@ -246,24 +260,24 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
     func displayImage(image: UIImage) {
         self.picNode.texture = SKTexture(image: image.fixedOrientation())
         cartas[self.WhichCard] = "image" + String(WhichCard) + ".jpg"
+        Preferences.saveCards()
 
     }
     
-    func loadImage()  {
+    func loadImage(imageName: String) -> UIImage? {
         let documentsDirectoryURL = FileManager.default.urls(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).first
         if let documentsDirectoryURL = documentsDirectoryURL {
             do {
-                let data = try Data(contentsOf: documentsDirectoryURL.appendingPathComponent("image" + String(WhichCard) + ".jpg"))
+                let data = try Data(contentsOf: documentsDirectoryURL.appendingPathComponent(imageName))
                 if let image = UIImage(data: data) {
-                    displayImage(image: image)
+                    return image
                 }
             } catch {
                 print(error)
             }
             
         }
-        
-        
+        return nil
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -277,7 +291,7 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
                     let documentsDirectoryURL = documentsDirectoryURL {
                     
                     do {
-                        try data.write(to: documentsDirectoryURL.appendingPathComponent("image.jpg"))
+                        try data.write(to: documentsDirectoryURL.appendingPathComponent("image" + String(self.WhichCard) + ".jpg"))
                     } catch {
                         print(error)
                     }

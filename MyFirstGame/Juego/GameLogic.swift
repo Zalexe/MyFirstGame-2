@@ -122,11 +122,26 @@ class GameLogic{
     }
     
     
-    
+    func loadImage(imageName: String) -> UIImage? {
+        let documentsDirectoryURL = FileManager.default.urls(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).first
+        if let documentsDirectoryURL = documentsDirectoryURL {
+            do {
+                let data = try Data(contentsOf: documentsDirectoryURL.appendingPathComponent(imageName))
+                if let image = UIImage(data: data) {
+                    return image
+                }
+            } catch {
+                print(error)
+            }
+            
+        }
+        return nil
+    }
             
         
     }
-    
+
+
     func move(){
         
     }
