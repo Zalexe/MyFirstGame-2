@@ -37,6 +37,8 @@ class GameLogic{
     
     init(dificulty: Int){
         
+        Preferences.getCards()
+        
         if(dificulty == 1){
             difficulty = .easy
             sizeCard = CGSize(width: 70 , height: 100)

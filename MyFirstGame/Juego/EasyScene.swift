@@ -105,7 +105,16 @@ class EasyScene: SKScene {
                 //self.textures[i].run(action1)
                 //resize new texture
                 
-                let action2 = SKAction.setTexture(self.Logic.textures[i].TextureFront, resize: true)
+               var action2 = SKAction.setTexture(self.Logic.textures[i].TextureFront, resize: true)
+                let startIndex = self.Logic.textures[i].imageName.index(self.Logic.textures[i].imageName.startIndex, offsetBy: 3)
+                let isCustom = String(self.Logic.textures[i].imageName[..<startIndex])
+                if(isCustom == "ima"){
+                    action2 = SKAction.setTexture(SKTexture(image: self.Logic.loadImage(imageName: self.Logic.textures[i].imageName)!), resize: false)
+                } else{
+                    action2 = SKAction.setTexture(self.Logic.textures[i].TextureFront, resize: true)
+                }
+ 
+                
                 let actionScale = SKAction.scale(to: CGSize(width:0.0,height:self.Logic.sizeCard.height), duration: 0.0)
                 //animacion voltear inversa
                 let action3 = SKAction.scale(to: CGSize(width:self.Logic.sizeCard.width,height:self.Logic.sizeCard.height), duration: 0.3)
@@ -169,7 +178,14 @@ class EasyScene: SKScene {
                 Logic.textures[identifier].run(action1)
                 //resize new texture
                 
-                var action2 = SKAction.setTexture(Logic.textures[identifier].TextureFront, resize: true)
+                var action2 = SKAction.setTexture(self.Logic.textures[identifier].TextureFront, resize: true)
+                let startIndex = self.Logic.textures[identifier].imageName.index(self.Logic.textures[identifier].imageName.startIndex, offsetBy: 3)
+                let isCustom = String(self.Logic.textures[identifier].imageName[..<startIndex])
+                if(isCustom == "ima"){
+                    action2 = SKAction.setTexture(SKTexture(image: self.Logic.loadImage(imageName: self.Logic.textures[identifier].imageName)!), resize: false)
+                } else{
+                    action2 = SKAction.setTexture(self.Logic.textures[identifier].TextureFront, resize: true)
+                }
                 
                 //animacion voltear inversa
                 let action33 = SKAction.scale(to: CGSize(width:0.0,height:Logic.sizeCard.height), duration: 0.0)
@@ -233,7 +249,14 @@ class EasyScene: SKScene {
                 self.Logic.textures[identifier].run(action1)
                 //resize new texture
                 
-                let action2 = SKAction.setTexture(self.Logic.textures[identifier].TextureFront, resize: true)
+                var action2 = SKAction.setTexture(self.Logic.textures[identifier].TextureFront, resize: true)
+                let startIndex = self.Logic.textures[identifier].imageName.index(self.Logic.textures[identifier].imageName.startIndex, offsetBy: 3)
+                let isCustom = String(self.Logic.textures[identifier].imageName[..<startIndex])
+                if(isCustom == "ima"){
+                    action2 = SKAction.setTexture(SKTexture(image: self.Logic.loadImage(imageName: self.Logic.textures[identifier].imageName)!), resize: false)
+                } else{
+                    action2 = SKAction.setTexture(self.Logic.textures[identifier].TextureFront, resize: true)
+                }
                 let actionScale = SKAction.scale(to: CGSize(width:0.0,height:self.Logic.sizeCard.height), duration: 0.0)
                 
                 //animacion voltear inversa
