@@ -32,7 +32,7 @@ class HardScene: SKScene {
         label?.fontColor = .black
         label?.fontSize = 15.0
         label?.fontName = "AvenirNext-Bold"
-        label?.position = CGPoint(x: (view.frame.width - 100 ) , y: (view.frame.height - 30))
+        label?.position = CGPoint(x: (view.frame.width - view.frame.width/4 ) , y: (view.frame.height - view.frame.height/12))
         addChild(label!)
         
         scene?.backgroundColor = SKColor(named: "Color")!
@@ -50,16 +50,16 @@ class HardScene: SKScene {
             
             let offsety = CGFloat(i)
             if(i < 6){
-                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 - (view.frame.width/3)) , y: (view.frame.height - view.frame.height / 10 - ((view.frame.height / 6) * offsety )))
+                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 - (view.frame.width/3)) , y: (view.frame.height - view.frame.height / 5 - ((view.frame.height / 7) * offsety )))
             }
             else if(i < 12){
-                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 - (view.frame.width/8) ) , y: (view.frame.height - view.frame.height / 10 - ((view.frame.height / 6) * (offsety - 6))))
+                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 - (view.frame.width/8) ) , y: (view.frame.height - view.frame.height / 5 - ((view.frame.height / 7) * (offsety - 6))))
             }
             else if( i < 18){
-                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 + (view.frame.width/8)) , y: (view.frame.height - view.frame.height / 10 - ((view.frame.height / 6) * (offsety - 12))))
+                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 + (view.frame.width/8)) , y: (view.frame.height - view.frame.height / 5 - ((view.frame.height / 7) * (offsety - 12))))
             }
             else if( i < 24){
-                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 + (view.frame.width/3)) , y: (view.frame.height - view.frame.height / 10 - ((view.frame.height / 6) * (offsety - 18))))
+                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 + (view.frame.width/3)) , y: (view.frame.height - view.frame.height / 5 - ((view.frame.height / 7) * (offsety - 18))))
             }
             
             Logic.textures[i].scale(to: CGSize(width: (view.frame.width / 20.0) + view.frame.width / 12.0, height: (view.frame.height / 20.0) + view.frame.height / 14.0))
@@ -77,7 +77,7 @@ class HardScene: SKScene {
             
             
             BackButton = SpriteButton(texture: SKTexture(imageNamed: "back"),size: CGSize(width: 50, height: 50))
-            BackButton!.position = CGPoint(x: 25 , y: (view.frame.height) - 25)
+            BackButton!.position = CGPoint(x: (view.frame.width/10 ) , y: (view.frame.height - view.frame.height/12))
             BackButton!.isUserInteractionEnabled = true
             
             BackButton!.onTap = {
@@ -103,7 +103,16 @@ class HardScene: SKScene {
                 //self.textures[i].run(action1)
                 //resize new texture
                 
-                let action2 = SKAction.setTexture(self.Logic.textures[i].TextureFront, resize: true)
+                var action2 = SKAction.setTexture(self.Logic.textures[i].TextureFront, resize: true)
+                let startIndex = self.Logic.textures[i].imageName.index(self.Logic.textures[i].imageName.startIndex, offsetBy: 3)
+                let isCustom = String(self.Logic.textures[i].imageName[..<startIndex])
+                if(isCustom == "ima"){
+                    action2 = SKAction.setTexture(SKTexture(image: self.Logic.loadImage(imageName: self.Logic.textures[i].imageName)!), resize: false)
+                } else{
+                    action2 = SKAction.setTexture(self.Logic.textures[i].TextureFront, resize: true)
+                }
+                
+                
                 let actionScale = SKAction.scale(to: CGSize(width:0.0,height:self.Logic.sizeCard.height), duration: 0.0)
                 //animacion voltear inversa
                 let action3 = SKAction.scale(to: CGSize(width:self.Logic.sizeCard.width,height:self.Logic.sizeCard.height), duration: 0.3)
@@ -124,8 +133,8 @@ class HardScene: SKScene {
                 let sequence = SKAction.sequence([action,action1, action2,actionScaleY, action3])
                 self.Logic.textures[i].run(sequence)
             }
-            enseñado = true
         }
+        
         let actionInicial4 = SKAction.wait(forDuration: 0.5)
         let actionInicial5 = SKAction.run{
             enseñado = true
@@ -148,7 +157,7 @@ class HardScene: SKScene {
             //si esta tapada
             if(Logic.cards[identifier].estado == Card.state.tapado){
                 Logic.secondCard = false
-                self.Logic.canTap = false
+                Logic.canTap = false
                 Logic.cards[identifier].estado = Card.state.destapado
                 
                 
@@ -161,7 +170,14 @@ class HardScene: SKScene {
                 Logic.textures[identifier].run(action1)
                 //resize new texture
                 
-                var action2 = SKAction.setTexture(Logic.textures[identifier].TextureFront, resize: true)
+                var action2 = SKAction.setTexture(self.Logic.textures[identifier].TextureFront, resize: true)
+                let startIndex = self.Logic.textures[identifier].imageName.index(self.Logic.textures[identifier].imageName.startIndex, offsetBy: 3)
+                let isCustom = String(self.Logic.textures[identifier].imageName[..<startIndex])
+                if(isCustom == "ima"){
+                    action2 = SKAction.setTexture(SKTexture(image: self.Logic.loadImage(imageName: self.Logic.textures[identifier].imageName)!), resize: false)
+                } else{
+                    action2 = SKAction.setTexture(self.Logic.textures[identifier].TextureFront, resize: true)
+                }
                 
                 //animacion voltear inversa
                 let action33 = SKAction.scale(to: CGSize(width:0.0,height:Logic.sizeCard.height), duration: 0.0)
@@ -175,8 +191,8 @@ class HardScene: SKScene {
                     if(self.Logic.textures[identifier].imageName == self.Logic.textures[self.Logic.tempIdent].imageName){
                         self.Logic.cards[identifier].estado = Card.state.emparejado
                         self.Logic.cards[self.Logic.tempIdent].estado = Card.state.emparejado
-                        self.Logic.score += self.Logic.points
-                        
+                        self.Logic.score += self.Logic.points * self.Logic.multiplier
+                        self.Logic.multiplier += 1
                         
                         //Comprobar si se ha acabado la partida
                         
@@ -188,6 +204,7 @@ class HardScene: SKScene {
                         //cambiar estado de las dos y animar volteo de vuelta
                         self.Logic.cards[identifier].estado = Card.state.tapado
                         self.Logic.cards[self.Logic.tempIdent].estado = Card.state.tapado
+                        self.Logic.multiplier = 1
                         
                         let actionScaleY = SKAction.scale(to: CGSize(width:0.0,height:self.Logic.sizeCard.height), duration: 0.0)
                         action3 = SKAction.scale(to: CGSize(width:self.Logic.sizeCard.width,height:self.Logic.sizeCard.height), duration: 0.3)
@@ -225,7 +242,14 @@ class HardScene: SKScene {
                 self.Logic.textures[identifier].run(action1)
                 //resize new texture
                 
-                let action2 = SKAction.setTexture(self.Logic.textures[identifier].TextureFront, resize: true)
+                var action2 = SKAction.setTexture(self.Logic.textures[identifier].TextureFront, resize: true)
+                let startIndex = self.Logic.textures[identifier].imageName.index(self.Logic.textures[identifier].imageName.startIndex, offsetBy: 3)
+                let isCustom = String(self.Logic.textures[identifier].imageName[..<startIndex])
+                if(isCustom == "ima"){
+                    action2 = SKAction.setTexture(SKTexture(image: self.Logic.loadImage(imageName: self.Logic.textures[identifier].imageName)!), resize: false)
+                } else{
+                    action2 = SKAction.setTexture(self.Logic.textures[identifier].TextureFront, resize: true)
+                }
                 let actionScale = SKAction.scale(to: CGSize(width:0.0,height:self.Logic.sizeCard.height), duration: 0.0)
                 
                 //animacion voltear inversa
@@ -251,7 +275,7 @@ class HardScene: SKScene {
         }
         
         if let label = label {
-            label.text = "\(time)"
+            label.text = "Time: \(time) Score: \(Logic.score)"
             
             if time == 0{
                 
