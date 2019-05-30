@@ -28,7 +28,7 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
     weak var aboutDelegate: AboutSceneDelegate?
     
     private var label : SKLabelNode?
-    
+    var carta : SKSpriteNode?
     
     var WhichCard: Int = 0
     
@@ -70,17 +70,17 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
         // let nombreArchivoCarta = "4corazones"
         Preferences.getCards()
         
-        let carta = SKSpriteNode(texture: SKTexture(imageNamed: cartas[WhichCard]))
+        carta = SKSpriteNode(texture: SKTexture(imageNamed: cartas[WhichCard]))
         if let image = self.loadImage(imageName: cartas[self.WhichCard]) {
-            self.setImageOnTexture(carta: carta, image: image)
+            self.setImageOnTexture(carta: carta!, image: image)
         } else {
-            self.setImageOnTexture(carta: carta, image: UIImage(named: cartas[self.WhichCard]) ?? UIImage())
+            self.setImageOnTexture(carta: carta!, image: UIImage(named: cartas[self.WhichCard]) ?? UIImage())
         }
         
-        addChild(carta)
+        addChild(carta!)
         
-        carta.scale(to: CGSize(width: AboutScene.cardWidth,height: AboutScene.cardHeight))
-        carta.position = CGPoint(x: view.frame.width / 2.0  , y: view.frame.height * 0.66)
+        carta!.scale(to: CGSize(width: AboutScene.cardWidth * 2,height: AboutScene.cardHeight * 2))
+        carta!.position = CGPoint(x: view.frame.width / 2.0  , y: view.frame.height * 0.66)
         
         MuteButton.scale(to: CGSize(width: AboutScene.buttonWidth / 2.0, height: AboutScene.buttonHeight + AboutScene.buttonHeight))
         MuteButton.position = CGPoint(x: view.frame.width / 2 + view.frame.width / 3 , y: view.frame.height * 0.33)
@@ -112,7 +112,7 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
         //botones cambiar imagen carta
         nextCard.fillColor = .white
         nextCard.isUserInteractionEnabled = true
-        nextCard.position = CGPoint(x: view.frame.width / 2 + (AboutScene.cardWidth / 2) + 25 /*mitad de su tamaño*/, y: view.frame.height * 0.63)
+        nextCard.position = CGPoint(x: view.frame.width / 2 + (AboutScene.cardWidth * 1.20) /*mitad de su tamaño*/, y: view.frame.height * 0.63)
         //playButton.fillColor = SKColor(named: "Color")!
         nextCard.strokeColor = .darkGray
         nextCard.setText(text: ">")
@@ -123,9 +123,9 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
             }
 
             if let image = self.loadImage(imageName: cartas[self.WhichCard]) {
-                self.setImageOnTexture(carta: carta, image: image)
+                self.setImageOnTexture(carta: self.carta!, image: image)
             } else {
-                self.setImageOnTexture(carta: carta, image: UIImage(named: cartas[self.WhichCard]) ?? UIImage())
+                self.setImageOnTexture(carta: self.carta!, image: UIImage(named: cartas[self.WhichCard]) ?? UIImage())
             }
             
             
@@ -146,7 +146,7 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
         
         backCard.fillColor = .white
         backCard.isUserInteractionEnabled = true
-        backCard.position = CGPoint(x: view.frame.width / 4 - (AboutScene.cardWidth / 2) , y: view.frame.height * 0.63)
+        backCard.position = CGPoint(x: view.frame.width / 3 - (AboutScene.cardWidth * 1.10) , y: view.frame.height * 0.63)
         //playButton.fillColor = SKColor(named: "Color")!
         backCard.strokeColor = .darkGray
         backCard.setText(text: "<")
@@ -157,9 +157,9 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
             }
             
             if let image = self.loadImage(imageName: cartas[self.WhichCard]) {
-                self.setImageOnTexture(carta: carta, image: image)
+                self.setImageOnTexture(carta: self.carta!, image: image)
             } else {
-                self.setImageOnTexture(carta: carta, image: UIImage(named: cartas[self.WhichCard]) ?? UIImage())
+                self.setImageOnTexture(carta: self.carta!, image: UIImage(named: cartas[self.WhichCard]) ?? UIImage())
             }
             
         }
@@ -171,7 +171,7 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
         
         selectImage.fillColor = .green
         selectImage.isUserInteractionEnabled = true
-        selectImage.position = CGPoint(x: view.frame.width / 2 - 160, y: view.frame.height * 0.33)
+        selectImage.position = CGPoint(x: view.frame.width * 0.13, y: view.frame.height * 0.35)
         //playButton.fillColor = SKColor(named: "Color")!
         selectImage.strokeColor = .cyan
         selectImage.delegate = self
@@ -179,7 +179,7 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
         addChild(selectImage)
         
         
-        picNode.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.66)
+        picNode.position = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.46)
        // addChild(picNode)
         
         picker.delegate = self
@@ -200,7 +200,7 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
         
         carta.run(action)
         action = SKAction.run{
-            carta.scale(to: CGSize(width: AboutScene.cardWidth,height: AboutScene.cardHeight))
+            carta.scale(to: CGSize(width: AboutScene.cardWidth * 2,height: AboutScene.cardHeight * 2))
             carta.position = CGPoint(x: self.view!.frame.width / 2.0, y: self.view!.frame.height * 0.66)}
         carta.run(action)
     }
@@ -292,6 +292,11 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
                     
                     do {
                         try data.write(to: documentsDirectoryURL.appendingPathComponent("image" + String(self.WhichCard) + ".jpg"))
+                        if let image = self.loadImage(imageName: cartas[self.WhichCard]) {
+                            self.setImageOnTexture(carta: self.carta!, image: image)
+                        } else {
+                            self.setImageOnTexture(carta: self.carta!, image: UIImage(named: cartas[self.WhichCard]) ?? UIImage())
+                        }
                     } catch {
                         print(error)
                     }
