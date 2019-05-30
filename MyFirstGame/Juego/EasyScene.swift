@@ -34,7 +34,7 @@ class EasyScene: SKScene {
         label?.fontColor = .black
         label?.fontSize = 15.0
         label?.fontName = "AvenirNext-Bold"
-        label?.position = CGPoint(x: (view.frame.width - 100 ) , y: (view.frame.height - 30))
+        label?.position = CGPoint(x: (view.frame.width - view.frame.width/4 ) , y: (view.frame.height - view.frame.height/12))
         addChild(label!)
         
         scene?.backgroundColor = SKColor(named: "Color")!
@@ -51,16 +51,16 @@ class EasyScene: SKScene {
         
         for i in 0..<(Logic.difficulty.rawValue ){
             
-            
+           
             let offsety = CGFloat(i)
             if(i < 4){
-                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 - (view.frame.width/3)) , y: (view.frame.height - view.frame.height/8 - ((view.frame.height / 4) * offsety )))
+                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 - (view.frame.width/3)) , y: (view.frame.height - view.frame.height/4 - ((view.frame.height / 5) * offsety )))
             }
             else if(i < 8){
-                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 ) , y: (view.frame.height - view.frame.height/8 - ((view.frame.height / 4) * (offsety - 4))))
+                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 ) , y: (view.frame.height - view.frame.height/4 - ((view.frame.height / 5) * (offsety - 4))))
             }
             else if( i < 13){
-                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 + (view.frame.width/3)) , y: (view.frame.height - view.frame.height/8 - ((view.frame.height / 4) * (offsety - 8))))
+                Logic.textures[i].position = CGPoint(x: (view.frame.width / 2.0 + (view.frame.width/3)) , y: (view.frame.height - view.frame.height/4 - ((view.frame.height / 5) * (offsety - 8))))
             }
             Logic.textures[i].scale(to: CGSize(width: (view.frame.width / 20.0) + view.frame.width / 6.0, height: (view.frame.height / 20.0) + view.frame.height / 8.0))
             Logic.sizeCard = CGSize(width: (view.frame.width / 20.0) + view.frame.width / 6.0, height: (view.frame.height / 20.0) + view.frame.height / 8.0)
@@ -78,7 +78,7 @@ class EasyScene: SKScene {
                 
             }
             BackButton = SpriteButton(texture: SKTexture(imageNamed: "back"),size: CGSize(width: 50, height: 50))
-            BackButton!.position = CGPoint(x: 25 , y: (view.frame.height) - 25)
+            BackButton!.position = CGPoint(x: (view.frame.width/10 ) , y: (view.frame.height - view.frame.height/12))
             BackButton!.isUserInteractionEnabled = true
             
             BackButton!.onTap = {
@@ -199,8 +199,8 @@ class EasyScene: SKScene {
                     if(self.Logic.textures[identifier].imageName == self.Logic.textures[self.Logic.tempIdent].imageName){
                         self.Logic.cards[identifier].estado = Card.state.emparejado
                         self.Logic.cards[self.Logic.tempIdent].estado = Card.state.emparejado
-                        self.Logic.score += self.Logic.points
-                        
+                        self.Logic.score += self.Logic.points * self.Logic.multiplier
+                        self.Logic.multiplier += 1
                         
                         //Comprobar si se ha acabado la partida
                         
@@ -212,6 +212,7 @@ class EasyScene: SKScene {
                         //cambiar estado de las dos y animar volteo de vuelta
                         self.Logic.cards[identifier].estado = Card.state.tapado
                         self.Logic.cards[self.Logic.tempIdent].estado = Card.state.tapado
+                        self.Logic.multiplier = 1
                         
                         let actionScaleY = SKAction.scale(to: CGSize(width:0.0,height:self.Logic.sizeCard.height), duration: 0.0)
                         action3 = SKAction.scale(to: CGSize(width:self.Logic.sizeCard.width,height:self.Logic.sizeCard.height), duration: 0.3)
@@ -281,7 +282,7 @@ class EasyScene: SKScene {
         }
         
         if let label = label {
-            label.text = "\(time)"
+            label.text = "Time: \(time) Score: \(Logic.score)"
             
             if time == 0{
                 

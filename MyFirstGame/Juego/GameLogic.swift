@@ -27,7 +27,7 @@ class GameLogic{
     var difficulty: Level
     
     var score = 0
-    
+    var multiplier = 1
     var secondCard:Bool = false
     var tempIdent:Int = 0
     var sizeCard:CGSize
@@ -41,7 +41,7 @@ class GameLogic{
         
         if(dificulty == 1){
             difficulty = .easy
-            sizeCard = CGSize(width: 70 , height: 100)
+            sizeCard = CGSize(width: 50 , height: 80)
 
             textures = [CardSprite(cartas[0]),CardSprite(cartas[1]),CardSprite(cartas[2])
                 ,CardSprite(cartas[3]),CardSprite(cartas[4]), CardSprite(cartas[5])    ,    CardSprite(cartas[0]),CardSprite(cartas[1]),CardSprite(cartas[2])
@@ -58,9 +58,9 @@ class GameLogic{
         }
         else if(dificulty == 2){
             difficulty = .medium
-            sizeCard = CGSize(width: 60, height: 90)
+            sizeCard = CGSize(width: 40, height: 70)
             
-           textures = [CardSprite("CardFront"),CardSprite("obelisk"),CardSprite("sliffer"),CardSprite("Chimeratech"),CardSprite("fusion"),CardSprite("mirror"),CardSprite("stardust"),CardSprite("firewall"),CardSprite("dhampir"),CardSprite("chaosmax")  ,   CardSprite("CardFront"),CardSprite("obelisk"),CardSprite("sliffer"),CardSprite("Chimeratech"),CardSprite("fusion"),CardSprite("mirror"),CardSprite("stardust"),CardSprite("firewall"),CardSprite("dhampir"),CardSprite("chaosmax")]
+           textures = [CardSprite(cartas[0]),CardSprite(cartas[1]),CardSprite(cartas[2]), CardSprite(cartas[3]),CardSprite(cartas[4]), CardSprite(cartas[5]),CardSprite(cartas[6]),CardSprite(cartas[7]),CardSprite(cartas[8]),CardSprite(cartas[9]),CardSprite(cartas[9]) ,                                                            CardSprite(cartas[0]),CardSprite(cartas[1]),CardSprite(cartas[2]), CardSprite(cartas[3]),CardSprite(cartas[4]), CardSprite(cartas[5]),CardSprite(cartas[6]),CardSprite(cartas[7]),CardSprite(cartas[8]),CardSprite(cartas[9]),CardSprite(cartas[9])]
             textures.shuffle()
             for _ in 0..<(difficulty.rawValue ){
                 let card1 = Card()
@@ -72,9 +72,9 @@ class GameLogic{
         }
         else{
             difficulty = .hard
-            sizeCard = CGSize(width: 50, height: 70)
+            sizeCard = CGSize(width: 30, height: 60)
             
-           textures = [CardSprite("CardFront"),CardSprite("obelisk"),CardSprite("sliffer"),CardSprite("Chimeratech"),CardSprite("fusion"),CardSprite("mirror"),CardSprite("stardust"),CardSprite("firewall"),CardSprite("dhampir"),CardSprite("chaosmax"),CardSprite("pendulum"),CardSprite("supreme")   ,   CardSprite("CardFront"),CardSprite("obelisk"),CardSprite("sliffer"),CardSprite("Chimeratech"),CardSprite("fusion"),CardSprite("mirror"),CardSprite("stardust"),CardSprite("firewall"),CardSprite("dhampir"),CardSprite("chaosmax"),CardSprite("pendulum"),CardSprite("supreme") ]
+           textures = [CardSprite(cartas[0]),CardSprite(cartas[1]),CardSprite(cartas[2]), CardSprite(cartas[3]),CardSprite(cartas[4]), CardSprite(cartas[5]),CardSprite(cartas[6]),CardSprite(cartas[7]),CardSprite(cartas[8]),CardSprite(cartas[9]),CardSprite(cartas[9]),CardSprite(cartas[10]), CardSprite(cartas[11]), CardSprite(cartas[0]),CardSprite(cartas[1]),CardSprite(cartas[2]) ,CardSprite(cartas[3]),CardSprite(cartas[4]), CardSprite(cartas[5]),CardSprite(cartas[6]),CardSprite(cartas[7]),CardSprite(cartas[8]),CardSprite(cartas[9]),CardSprite(cartas[9]),CardSprite(cartas[10]),CardSprite(cartas[11])]
             textures.shuffle()
             for _ in 0..<(difficulty.rawValue ){
                 let card1 = Card()
