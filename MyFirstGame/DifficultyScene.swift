@@ -97,6 +97,12 @@ class DifficultyScene: SKScene, ButtonDelegate {
         }
         scene?.backgroundColor = SKColor(named: "Color")!
         
+        let MenuTitle = SKSpriteNode(imageNamed: "MenuD")
+        addChild(MenuTitle)
+        MenuTitle.position = CGPoint(x: view.frame.width / 2.0 , y: view.frame.height * 0.70)
+        MenuTitle.scale(to: CGSize(width: view.frame.width * 0.66,height: view.frame.height * 0.46))
+        
+        
         // Get label node from scene and store it for use later
         self.label = SKLabelNode(text: "Hello, World")
         if let label = self.label {

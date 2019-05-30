@@ -84,6 +84,10 @@ class MenuScene: SKScene/*, ButtonDelegate*/ {
         logo.position = CGPoint(x: view.frame.width / 2.0 , y: view.frame.height * 0.86)
         logo.scale(to: CGSize(width: view.frame.width * 0.86,height: view.frame.height / 8))
         
+        let MenuTitle = SKSpriteNode(imageNamed: "MenuT")
+        addChild(MenuTitle)
+        MenuTitle.position = CGPoint(x: view.frame.width / 2.0 , y: view.frame.height * 0.60)
+        MenuTitle.scale(to: CGSize(width: view.frame.width / 2,height: view.frame.height * 0.36))
         // Get label node from scene and store it for use later
         /*  self.label = SKLabelNode(text: "Hello, World")
          if let label = self.label {
