@@ -72,7 +72,10 @@ class HardScene: SKScene {
                 if(self!.Logic.canTap && self!.Logic.Win() != true && self!.time != 0 && enseñado){
                     self!.tapOnCard(identifier: i)
                 }
-
+                if(Preferences.isSoundOn() == true){
+                    self!.Logic.cards[i].player.play()
+                    
+                }
             }
             
             
@@ -219,6 +222,10 @@ class HardScene: SKScene {
                         
                     }
                     self.Logic.canTap = true
+                    if(Preferences.isSoundOn() == true){
+                        self.Logic.cards[identifier].stop()
+                        
+                    }
                 }
                 let actionScale = SKAction.scale(to: CGSize(width:self.Logic.sizeCard.width,height:self.Logic.sizeCard.height), duration: 0.0)
                 sequence = SKAction.sequence([action,action1, action2,action33, action3,actionScale, action4])
@@ -258,7 +265,10 @@ class HardScene: SKScene {
                 self.Logic.textures[identifier].run(sequence)
                 
             }
-            
+            if(Preferences.isSoundOn() == true){
+                self.Logic.cards[identifier].stop()
+                
+            }
             
             
         }

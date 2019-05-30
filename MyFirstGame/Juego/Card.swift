@@ -8,6 +8,7 @@
 
 import UIKit
 import GameplayKit
+import AVFoundation
 
 class Card{
     //var id = 0
@@ -17,6 +18,10 @@ class Card{
         case emparejado
         
     }
+    let player = AVPlayer(url: Bundle.main.url(forResource: "cardFlip.wav",withExtension: nil)!)
+    
+    private let sharedAudioController = AudioController()
+    
     public var estado = state.tapado
     
     init(/*identifier: Int*/){
@@ -31,5 +36,11 @@ class Card{
     }
     func tapar(){
         estado = state.tapado
+    }
+    
+    func stop(){
+        player.pause()
+        player.seek(to: CMTime.zero)
+        
     }
 }

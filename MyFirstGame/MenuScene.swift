@@ -44,14 +44,14 @@ class MenuScene: SKScene/*, ButtonDelegate*/ {
         
         playButton.fillColor = .green
         playButton.isUserInteractionEnabled = true
-        playButton.position = CGPoint(x: view.frame.width / 2 -  100, y: view.frame.height * 0.40)
+        playButton.position = CGPoint(x: view.frame.width / 2 -  100, y: view.frame.height * 0.25)
         //playButton.fillColor = SKColor(named: "Color")!
         playButton.strokeColor = .cyan
         playButton.setText(text: "Game Start")
         addChild(playButton)
         playButton.onTap = {
             [weak self] in
-            print("le han dado al opciones")
+           // print("le han dado al opciones")
             if let scene = self, let menuDelegate = self?.menuDelegate {
                 menuDelegate.goToGame(sender: scene)
             }
@@ -62,14 +62,14 @@ class MenuScene: SKScene/*, ButtonDelegate*/ {
         //botton options 1
         settingsButton.fillColor = .yellow
         settingsButton.isUserInteractionEnabled = true
-        settingsButton.position = CGPoint(x: view.frame.width / 2 - 100, y: view.frame.height * 0.20)
+        settingsButton.position = CGPoint(x: view.frame.width / 2 - 100, y: view.frame.height * 0.10)
         settingsButton.setText(text: "Settings")
         settingsButton.strokeColor = .cyan
         addChild(settingsButton)
 
         settingsButton.onTap = {
             [weak self] in
-            print("le han dado al opciones")
+           // print("le han dado al opciones")
             if let scene = self, let menuDelegate = self?.menuDelegate {
                 menuDelegate.goToAbout(sender: scene)
             }
@@ -82,7 +82,7 @@ class MenuScene: SKScene/*, ButtonDelegate*/ {
         let logo = SKSpriteNode(imageNamed: "enti-png-2")
         addChild(logo)
         logo.position = CGPoint(x: view.frame.width / 2.0 , y: view.frame.height * 0.86)
-        logo.scale(to: CGSize(width: 200,height: 100))
+        logo.scale(to: CGSize(width: view.frame.width * 0.86,height: view.frame.height / 8))
         
         // Get label node from scene and store it for use later
         /*  self.label = SKLabelNode(text: "Hello, World")

@@ -40,7 +40,7 @@ class DifficultyScene: SKScene, ButtonDelegate {
         backButton.fillColor = .red
         backButton.isUserInteractionEnabled = true
         backButton.delegate = self
-        backButton.position = CGPoint(x: (view.frame.width / 2.0) - (AboutScene.buttonWidth / 2.0), y: 100)
+        backButton.position = CGPoint(x: (view.frame.width / 2.0) - (AboutScene.buttonWidth / 2.0), y: view.frame.height * 0.05)
         addChild(backButton)
         
         //probable que ponga el logo en una esquina en todos los menus
@@ -52,7 +52,7 @@ class DifficultyScene: SKScene, ButtonDelegate {
         
         EasyButton.fillColor = .white
         EasyButton.isUserInteractionEnabled = true
-        EasyButton.position = CGPoint(x: view.frame.width / 2 - 50.0, y: view.frame.height * 0.70)
+        EasyButton.position = CGPoint(x: view.frame.width / 2 - 50.0, y: view.frame.height * 0.35)
         //playButton.fillColor = SKColor(named: "Color")!
         EasyButton.strokeColor = .darkGray
         EasyButton.setText(text: "Easy")
@@ -68,7 +68,7 @@ class DifficultyScene: SKScene, ButtonDelegate {
         
         NormalButton.fillColor = .white
         NormalButton.isUserInteractionEnabled = true
-        NormalButton.position = CGPoint(x: view.frame.width / 2 - 50.0, y: view.frame.height * 0.55)
+        NormalButton.position = CGPoint(x: view.frame.width / 2 - 50.0, y: view.frame.height * 0.25)
         //playButton.fillColor = SKColor(named: "Color")!
         NormalButton.strokeColor = .darkGray
         NormalButton.setText(text: "Normal")
@@ -83,7 +83,7 @@ class DifficultyScene: SKScene, ButtonDelegate {
         
         HardButton.fillColor = .white
         HardButton.isUserInteractionEnabled = true
-        HardButton.position = CGPoint(x: view.frame.width / 2 - 50.0, y: view.frame.height * 0.40)
+        HardButton.position = CGPoint(x: view.frame.width / 2 - 50.0, y: view.frame.height * 0.15)
         //playButton.fillColor = SKColor(named: "Color")!
         HardButton.strokeColor = .darkGray
         HardButton.setText(text: "Hard")

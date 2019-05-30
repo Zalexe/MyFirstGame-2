@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B1DF3B7229FFEB50065655D /* cardFlip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6B1DF3B6229FFEB50065655D /* cardFlip.wav */; };
 		6B490D0E228460DF00A7F4C1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6B490D10228460DF00A7F4C1 /* InfoPlist.strings */; };
 		6BC2874A228D96CE00AD39DC /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6BC28749228D96CE00AD39DC /* Settings.bundle */; };
 		A30AA601223A861300F44940 /* DifficultyScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30AA600223A861300F44940 /* DifficultyScene.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6B1DF3B6229FFEB50065655D /* cardFlip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = cardFlip.wav; sourceTree = "<group>"; };
 		6B490D0C228460BD00A7F4C1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		6B490D0D228460BE00A7F4C1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		6B490D0F228460DF00A7F4C1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				A3E3DC602243C8A7007A4910 /* Juego */,
 				A3546266225B7BEC007DCD91 /* Assets.xcassets */,
 				A3208875225F780100A4D174 /* bgm.mp3 */,
+				6B1DF3B6229FFEB50065655D /* cardFlip.wav */,
 				A3FF393C2216ECE000BE3829 /* LaunchScreen.storyboard */,
 				A3FF393F2216ECE000BE3829 /* Info.plist */,
 				A313786022315D9D006C8105 /* ClousureButton.swift */,
@@ -198,6 +201,7 @@
 				A3FF39392216ECDE00BE3829 /* Main.storyboard in Resources */,
 				6B490D0E228460DF00A7F4C1 /* InfoPlist.strings in Resources */,
 				A3FF39302216ECDE00BE3829 /* GameScene.sks in Resources */,
+				6B1DF3B7229FFEB50065655D /* cardFlip.wav in Resources */,
 				A3FF393E2216ECE000BE3829 /* LaunchScreen.storyboard in Resources */,
 				A3208876225F780100A4D174 /* bgm.mp3 in Resources */,
 				A3546267225B7BEC007DCD91 /* Assets.xcassets in Resources */,
