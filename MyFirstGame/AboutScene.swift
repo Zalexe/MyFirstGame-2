@@ -45,7 +45,7 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
     private var backButton = Button(rect: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight), cornerRadius: 10)
     
     var swipeRightGesture = UISwipeGestureRecognizer()
-    
+    var swipeLeftGesture = UISwipeGestureRecognizer()
     
     //para escribir texto
    // var text:UITextField
@@ -134,15 +134,15 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
         addChild(nextCard)
         
         
-        //swipe hacia la derecha, falta muchas cosas
-
-      /*  if view == nil{
-            
-            swipeRightGesture.view?.removeGestureRecognizer(swipeRightGesture)
-        }*/
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(sender:)))
-        swipeRight.direction = .right
-        view.addGestureRecognizer(swipeRight)
+        //swipe right
+        swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(sender:)))
+        swipeRightGesture.direction = .right
+        view.addGestureRecognizer(swipeRightGesture)
+        //swipe left
+        swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeLeft(sender:)))
+        swipeLeftGesture.direction = .left
+        view.addGestureRecognizer(swipeLeftGesture)
+        
         
         backCard.fillColor = .white
         backCard.isUserInteractionEnabled = true
@@ -222,9 +222,29 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
     }
     
     @objc func swipeRight(sender: UISwipeGestureRecognizer){
-        print("Swipe detectado")
+        self.WhichCard = self.WhichCard + 1
+        if(self.WhichCard > 11){
+            self.WhichCard = 0
+        }
+        
+        if let image = self.loadImage(imageName: cartas[self.WhichCard]) {
+            self.setImageOnTexture(carta: self.carta!, image: image)
+        } else {
+            self.setImageOnTexture(carta: self.carta!, image: UIImage(named: cartas[self.WhichCard]) ?? UIImage())
+        }
     }
-    
+    @objc func swipeLeft(sender: UISwipeGestureRecognizer){
+        self.WhichCard = self.WhichCard - 1
+        if(self.WhichCard < 0){
+            self.WhichCard = 11
+        }
+        
+        if let image = self.loadImage(imageName: cartas[self.WhichCard]) {
+            self.setImageOnTexture(carta: self.carta!, image: image)
+        } else {
+            self.setImageOnTexture(carta: self.carta!, image: UIImage(named: cartas[self.WhichCard]) ?? UIImage())
+        }
+    }
     
     
     
@@ -296,7 +316,7 @@ class AboutScene: SKScene, ButtonDelegate, UIImagePickerControllerDelegate, UINa
                             self.setImageOnTexture(carta: self.carta!, image: image)
                         } else {
                             self.setImageOnTexture(carta: self.carta!, image: UIImage(named: cartas[self.WhichCard]) ?? UIImage())
-                        }
+                        }           
                     } catch {
                         print(error)
                     }
